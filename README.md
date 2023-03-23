@@ -6,6 +6,18 @@
 </div>
 
 <br/>
+<img src="Design/Nadpis/Funkce.svg" alt="Funkce">
+
+- [ ] Hlášení
+- [ ] Suplování
+    - [ ] Příkaz
+    - [ ] Interval
+    - [ ] Detekce změny
+- [ ] Služba
+    - [ ] Příkaz
+    - [ ] Interval
+
+<br/>
 <p align="center">
     <a href="https://discord.com/api/oauth2/authorize?client_id=1080575281091326063&permissions=274877908992&scope=bot%20applications.commands">
         <img src="Design/Banner/Přidat.svg" alt="Přidat"/>
