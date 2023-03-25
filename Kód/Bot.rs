@@ -1,3 +1,4 @@
+use log::{info, error, debug};
 use std::env;
 use serenity::
 {
@@ -10,6 +11,8 @@ use serenity::
     prelude::*
 };
 
+
+
 struct Handler;
 
 #[async_trait]
@@ -17,7 +20,8 @@ impl EventHandler for Handler
 {
     async fn ready(&self, _: Context, ready: Ready)
     {
-        println!("{} připraven", ready.user.name)
+        env_logger::init();
+        info!("{} připraven", ready.user.name)
     }
 }
 
@@ -39,6 +43,6 @@ async fn main()
 
     if let Err(why) = client.start().await
     {
-        println!("Chyba: {:?}", why);
+        error!("Chyba: {:?}", why);
     }
 }
