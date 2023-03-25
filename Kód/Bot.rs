@@ -24,7 +24,9 @@ impl EventHandler for Handler
 #[tokio::main]
 async fn main()
 {
-    let token = env::var("DISCORD_BOT_SSPSG")
+    dotenv::dotenv()
+        .expect("Soubor .env nenalezen");
+    let token = env::var("DISCORD_BOT")
         .expect("Očekávaný token Discord aplikace nenalezen");
     let intents = GatewayIntents::GUILD_MESSAGES
     | GatewayIntents::DIRECT_MESSAGES
