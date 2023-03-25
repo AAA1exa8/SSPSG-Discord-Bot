@@ -1,27 +1,31 @@
-use log::{info, error, debug};
+use log::{info, error};
 use std::env;
 use serenity::
 {
     async_trait,
     model::
     {
-        channel::Message,
-        gateway::Ready
+        application::command::Command,
+        application::interaction::
+        {
+            Interaction,
+            InteractionResponseType
+        },
+        gateway::Ready,
+        prelude::{Guild, GuildId, command}
     },
     prelude::*
 };
 
-
-
-struct Handler;
+struct Bot;
 
 #[async_trait]
-impl EventHandler for Handler
+impl EventHandler for Bot
 {
-    async fn ready(&self, _: Context, ready: Ready)
+    async fn ready(&self, context: Context, ready: Ready)
     {
         env_logger::init();
-        info!("{} připraven", ready.user.name)
+        info!("{} připraven", ready.user.name);
     }
 }
 
@@ -37,7 +41,7 @@ async fn main()
     | GatewayIntents::MESSAGE_CONTENT;
 
     let mut client = Client::builder(&token, intents)
-        .event_handler(Handler)
+        .event_handler(Bot)
         .await
         .expect("Chyba při vytváření klienta");
 
