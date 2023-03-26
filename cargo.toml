@@ -14,5 +14,5 @@ path = "kod/bot.rs"
 log = "0.4"
 env_logger = "0.10"
 dotenv = "0.15"
-serenity = { version = "0.11", default-features = false, features = ["client", "gateway", "rustls_backend", "model"] }
-tokio = { version = "1.21.2", features = ["macros", "rt-multi-thread"] }
+poise = "0.5"
+tokio = { version = "1.26", features = ["macros", "rt-multi-thread"] }
