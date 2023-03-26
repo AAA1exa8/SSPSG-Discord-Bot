@@ -1,6 +1,6 @@
 [package]
 name = "sspšg-discord-bot"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["František Vojáček <vojacek.fr.2021@ssps.cz>"]
 edition = "2021"
 
@@ -8,7 +8,7 @@ edition = "2021"
 
 [[bin]]
 name = "bot"
-path = "Kód/Bot.rs"
+path = "kod/bot.rs"
 
 [dependencies]
 log = "0.4"
