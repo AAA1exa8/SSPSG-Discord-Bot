@@ -24,31 +24,6 @@ struct Bot;
 #[async_trait]
 impl EventHandler for Bot
 {
-    async fn interaction_create(&self, context: Context, interaction: Interaction)
-    {
-        if let Interaction::ApplicationCommand(command) = interaction
-        {
-            info!("Interakce {:#?} přijata", command);
-
-            let content = match command.data.name.as_str() {
-                "Prikaz" => prikaz::prikaz::run(),
-                _ => "Neimplementováno".to_string(),
-            };
-
-            if let Err(why) = command
-                .create_interaction_response(&context.http, |response| {
-                    response
-                        .kind(InteractionResponseType::ChannelMessageWithSource)
-                        .interaction_response_data(|message| message.content(content))
-                })
-                .await
-            {
-                error!("Cannot respond to slash command: {}", why);
-            }
-
-        }
-    }
-
     async fn ready(&self, context: Context, ready: Ready)
     {
         env_logger::init();
@@ -60,6 +35,31 @@ impl EventHandler for Bot
         }).await;
 
         info!("Příkazy {:#?} registrovány", commands)
+    }
+
+    async fn interaction_create(&self, context: Context, interaction: Interaction)
+    {
+        if let Interaction::ApplicationCommand(command) = interaction
+        {
+            info!("Interakce {:#?} přijata", command);
+
+            let content = match command.data.name.as_str() {
+                "prikaz" => prikaz::prikaz::run(),
+                _ => "Neimplementováno".to_string(),
+            };
+
+            if let Err(why) = command
+                .create_interaction_response(&context.http, |response| {
+                    response
+                        .kind(InteractionResponseType::ChannelMessageWithSource)
+                        .interaction_response_data(|message| message.content(content))
+                })
+                .await
+            {
+                error!("Chyba při odpovědi na příkaz: {}", why);
+            }
+
+        }
     }
 }
 
