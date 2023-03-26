@@ -8,7 +8,7 @@ edition = "2021"
 
 [[bin]]
 name = "bot"
-path = "Kod/Bot.rs"
+path = "kod/bot.rs"
 
 [dependencies]
 log = "0.4"

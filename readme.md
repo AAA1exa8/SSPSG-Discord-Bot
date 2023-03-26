@@ -1,12 +1,12 @@
 <div align="center">
-    <img src="Design/Banner/SSPSG Discord Bot.svg" alt="SSPŠG Discord Bot"/>
+    <img src="design/banner/sspsg discord bot.svg" alt="SSPŠG Discord Bot"/>
 </div>
 <div align="center">
-    <img src="Design/Banner/SSPSG Discord.svg" alt="SSPŠG × Discord"/>
+    <img src="design/banner/sspsg discord.svg" alt="SSPŠG × Discord"/>
 </div>
 
 <br/>
-<img src="Design/Nadpis/Funkce.svg" alt="Funkce">
+<img src="design/nadpis/funkce.svg" alt="Funkce">
 
 - [ ] Hlášení
 - [ ] Suplování
@@ -20,6 +20,6 @@
 <br/>
 <p align="center">
     <a href="https://discord.com/api/oauth2/authorize?client_id=1080575281091326063&permissions=274877908992&scope=bot%20applications.commands">
-        <img src="Design/Banner/Pridat.svg" alt="Přidat"/>
+        <img src="design/banner/pridat.svg" alt="Přidat"/>
     </a>
 </p>
