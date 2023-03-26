@@ -1,86 +1,60 @@
 mod prikaz;
 
-use log::{info, error};
-use std::env;
-use serenity::
+use log::
 {
-    async_trait,
-    model::
-    {
-        application::command::Command,
-        application::interaction::
-        {
-            Interaction,
-            InteractionResponseType
-        },
-        gateway::Ready,
-        prelude::*
-    },
-    prelude::*
+    info,
+    error
 };
+use std::env;
+use poise::serenity_prelude as serenity;
+use serenity::GatewayIntents;
 
-struct Bot;
+struct Data {}
+type Error = Box<dyn std::error::Error + Send + Sync>;
+type Context<'a> = poise::Context<'a, Data, Error>;
 
-#[async_trait]
-impl EventHandler for Bot
+#[poise::command(slash_command, prefix_command)]
+async fn prikaz(context: Context<'_>) -> Result<(), Error>
 {
-    async fn ready(&self, context: Context, ready: Ready)
-    {
-        env_logger::init();
-        info!("Discord Bot {} připraven", ready.user.name);
-
-        let commands = Command::create_global_application_command(context.http, |command| 
-        {
-            prikaz::prikaz::register(command)
-        }).await;
-
-        info!("Příkazy {:#?} registrovány", commands)
-    }
-
-    async fn interaction_create(&self, context: Context, interaction: Interaction)
-    {
-        if let Interaction::ApplicationCommand(command) = interaction
-        {
-            info!("Interakce {:#?} přijata", command);
-
-            let content = match command.data.name.as_str() {
-                "prikaz" => prikaz::prikaz::run(),
-                _ => "Neimplementováno".to_string(),
-            };
-
-            if let Err(why) = command
-                .create_interaction_response(&context.http, |response| {
-                    response
-                        .kind(InteractionResponseType::ChannelMessageWithSource)
-                        .interaction_response_data(|message| message.content(content))
-                })
-                .await
-            {
-                error!("Chyba při odpovědi na příkaz: {}", why);
-            }
-
-        }
-    }
+    context.say("Příkaz").await?;
+    Ok(())
 }
 
 #[tokio::main]
 async fn main()
 {
+    // Inicializace záznamu log
+    env_logger::init();
+
+    // Načtení hodnot v souboru .env
     dotenv::dotenv()
         .expect("Soubor .env nenalezen");
+
     let token = env::var("DISCORD_BOT")
         .expect("Očekávaný token Discord aplikace nenalezen");
-    let intents = GatewayIntents::GUILD_MESSAGES
-    | GatewayIntents::DIRECT_MESSAGES
+    let intents = GatewayIntents::non_privileged()
     | GatewayIntents::MESSAGE_CONTENT;
+    let prikazy = vec!
+    [
+        prikaz()
+    ];
 
-    let mut client = Client::builder(&token, intents)
-        .event_handler(Bot)
-        .await
-        .expect("Chyba při vytváření klienta");
+    let framework = poise::Framework::builder()
+        .options(poise::FrameworkOptions
+            {
+                commands: (prikazy),
+                ..Default::default()
+            })
+        .token(token)
+        .intents(intents)
+        .setup(|context, _ready, framework|
+        {
+            Box::pin(async move
+            {
+                poise::builtins::register_globally(context, &framework.options().commands).await?;
+                Ok(Data {})
+            })
+        });
 
-    if let Err(why) = client.start().await
-    {
-        error!("Chyba: {:?}", why);
-    }
+    framework.run().await.unwrap();
 }
