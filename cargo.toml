@@ -1,6 +1,6 @@
 [package]
 name = "sspšg-discord-bot"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["František Vojáček <vojacek.fr.2021@ssps.cz>"]
 edition = "2021"
 
