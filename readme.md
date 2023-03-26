@@ -9,13 +9,17 @@
 <img src="design/nadpis/funkce.svg" alt="Funkce">
 
 - [ ] Hlášení
-- [ ] Suplování
-    - [ ] Příkaz
-    - [ ] Interval
+- [x] Suplování
+    - [x] Příkaz
+    - [x] Interval
     - [ ] Detekce změny
-- [ ] Služba
-    - [ ] Příkaz
-    - [ ] Interval
+- [x] Služba
+    - [x] Příkaz
+    - [x] Interval
+
+</br>
+<img src="design/ukazka/suplovani.png" height= "350">
+<img src="design/ukazka/sluzba.png" height="250">
 
 <br/>
 <p align="center">
